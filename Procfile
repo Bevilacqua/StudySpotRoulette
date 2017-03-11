@@ -1,1 +1,1 @@
-web: StudySpotRoulette
+web: StudySpotRoulette -port=$PORT
