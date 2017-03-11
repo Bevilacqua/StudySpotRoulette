@@ -1,0 +1,23 @@
+/* Top Level */
+
+html, body {
+  background-color: #eceeef;
+  padding-top: 25px;
+  height: 100vh;
+}
+
+h1 {
+  color: #6DC17B;
+}
+
+
+/* Layout */
+.content {
+  margin: 5% 15%;
+}
+
+/* Utility */
+
+.center {
+  text-align: center;
+}
