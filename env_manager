@@ -1,0 +1,9 @@
+#!/bin/bash
+# Pull the ENV variables from heroku
+
+clear
+echo -n "" > .env
+echo "Pulling from Heroku."
+heroku config:get STUDYSPACE_KEY -s >> .env --app study-spot-roulette
+
+echo ".env created."
