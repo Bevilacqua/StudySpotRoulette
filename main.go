@@ -11,5 +11,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
   http.HandleFunc("/", handler)
-  http.ListenAndServe(":8080", nil)
+  fmt.Println("listening...")
+  err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+  if err != nil {
+    panic(err)
+  }
 }
