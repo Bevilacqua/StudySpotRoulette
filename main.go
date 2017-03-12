@@ -73,7 +73,7 @@ func main() {
   router.GET("/", func(c *gin.Context) {
     space := ChooseRandom(LoadSpaceList("https://study.space/api/v1/spaces.json"))
     log.Println(space.Name)
-		c.HTML(http.StatusOK, "index.tmpl.html", ", world")
+		c.HTML(http.StatusOK, "index.tmpl.html", space.Name)
 	})
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.
