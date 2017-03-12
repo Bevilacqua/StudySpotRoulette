@@ -53,7 +53,7 @@ func main() {
 	router.Static("/static", "static") // For static assets
 
   router.GET("/", func(c *gin.Context) {
-    space := LoadSpace("https://study.space/api/v1/spaces.json")
+    space := LoadSpace("https://study.space/api/v1/space/random.json")
     log.Println(space.Name)
 		c.HTML(http.StatusOK, "index.tmpl.html",gin.H{
             "name": space.Name,
