@@ -5,8 +5,6 @@ import (
   "net/http"
   "os"
   "log"
-  "math/rand"
-  "time"
 
   "github.com/gin-gonic/gin"
 )
@@ -31,11 +29,10 @@ type Space struct {
 	ImageLink string `json:"image_link"`
 }
 
-func LoadSpace(url string) SpaceList {
+func LoadSpace(url string) Space {
   req, err := http.NewRequest("GET", url, nil)
   if err != nil {
     log.Fatal("NewRequest: ", err)
-    return nil
   }
 
   req.Header.Add("Authorization", "Token " + os.Getenv("STUDYSPACE_KEY"))
@@ -45,7 +42,6 @@ func LoadSpace(url string) SpaceList {
   resp, err := client.Do(req)
   if err != nil {
     log.Println("Do: ", err)
-    return nil
   }
 
   defer resp.Body.Close()
@@ -70,11 +66,11 @@ func main() {
     space := LoadSpace("https://study.space/api/v1/spaces.json")
     log.Println(space.Name)
 		c.HTML(http.StatusOK, "index.tmpl.html",gin.H{
-            "name": space.name,
+            "name": space.Name,
             "description": space.ShortDescription,
             "current_checkins": space.CurrentCheckins,
             "picture_link": space.PictureLink,
-            "id": space.id,
+            "id": space.ID,
     })
 	})
   // By default it serves on :8080 unless a
