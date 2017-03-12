@@ -5,6 +5,8 @@ import (
   "net/http"
   "os"
   "log"
+  "math/rand"
+  "time"
 
   "github.com/gin-gonic/gin"
 )
@@ -18,11 +20,20 @@ type SpaceList []struct {
 	PictureLink string `json:"picture_link"`
 }
 
-func LoadSpaceList(url string) {
+type Space struct {
+	ID int `json:"id"`
+	Name string `json:"name"`
+	Description string `json:"description"`
+	TotalCheckins int `json:"total_checkins"`
+	ImageLink string `json:"image_link"`
+	PictureLink string `json:"picture_link"`
+}
+
+func LoadSpaceList(url string) SpaceList {
   req, err := http.NewRequest("GET", url, nil)
   if err != nil {
     log.Fatal("NewRequest: ", err)
-    return
+    return nil
   }
 
   req.Header.Add("Authorization", "Token " + os.Getenv("STUDYSPACE_KEY"))
@@ -32,7 +43,7 @@ func LoadSpaceList(url string) {
   resp, err := client.Do(req)
   if err != nil {
     log.Println("Do: ", err)
-    return
+    return nil
   }
 
   defer resp.Body.Close()
@@ -42,8 +53,13 @@ func LoadSpaceList(url string) {
   if err := json.NewDecoder(resp.Body).Decode(&records); err != nil {
     log.Println(err)
   }
+  return records
+}
 
-  log.Println("Look: " + records[0].Name + "!")
+func ChooseRandom(records SpaceList) Space {
+  s := rand.NewSource(time.Now().Unix())
+  r := rand.New(s) // initialize local pseudorandom generator
+  return records[r.Intn(len(records))]
 }
 
 func main() {
@@ -55,7 +71,8 @@ func main() {
 	router.Static("/static", "static") // For static assets
 
   router.GET("/", func(c *gin.Context) {
-    LoadSpaceList("https://study.space/api/v1/spaces.json")
+    space := ChooseRandom(LoadSpaceList("https://study.space/api/v1/spaces.json"))
+    log.Println(space.Name)
 		c.HTML(http.StatusOK, "index.tmpl.html", ", world")
 	})
   // By default it serves on :8080 unless a
