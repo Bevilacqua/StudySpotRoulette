@@ -31,7 +31,7 @@ func LoadSpaceList(url string) {
 
   resp, err := client.Do(req)
   if err != nil {
-    log.Fatal("Do: ", err)
+    log.Println("Do: ", err)
     return
   }
 
@@ -42,6 +42,8 @@ func LoadSpaceList(url string) {
   if err := json.NewDecoder(resp.Body).Decode(&records); err != nil {
     log.Println(err)
   }
+
+  log.Println("Look: " + records[0].ID + "!")
 }
 
 func main() {

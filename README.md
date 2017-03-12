@@ -1,2 +1,2 @@
 # StudySpotRoulette
-Study Spot Roulette
+https://study-spot-roulette.herokuapp.com/
