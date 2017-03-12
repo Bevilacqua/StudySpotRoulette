@@ -11,25 +11,27 @@ import (
   "github.com/gin-gonic/gin"
 )
 
-type SpaceList []struct {
-	ID int `json:"id"`
-	Name string `json:"name"`
-	Description string `json:"description"`
-	TotalCheckins int `json:"total_checkins"`
-	ImageLink string `json:"image_link"`
-	PictureLink string `json:"picture_link"`
-}
-
 type Space struct {
 	ID int `json:"id"`
 	Name string `json:"name"`
 	Description string `json:"description"`
+	PictureLink string `json:"picture_link"`
+	Conditions string `json:"conditions"`
+	Address string `json:"address"`
+	ShortDescription string `json:"short_description"`
+	Campus string `json:"campus"`
+	CampusID int `json:"campus_id"`
+	Features []interface{} `json:"features"`
+	Area string `json:"area"`
+	AreaID int `json:"area_id"`
+	Rating float64 `json:"rating"`
+	NoiseRating float64 `json:"noise_rating"`
+	CurrentCheckins string `json:"current_checkins"`
 	TotalCheckins int `json:"total_checkins"`
 	ImageLink string `json:"image_link"`
-	PictureLink string `json:"picture_link"`
 }
 
-func LoadSpaceList(url string) SpaceList {
+func LoadSpace(url string) SpaceList {
   req, err := http.NewRequest("GET", url, nil)
   if err != nil {
     log.Fatal("NewRequest: ", err)
@@ -48,18 +50,12 @@ func LoadSpaceList(url string) SpaceList {
 
   defer resp.Body.Close()
 
-  var records SpaceList
+  var space Space
 
-  if err := json.NewDecoder(resp.Body).Decode(&records); err != nil {
+  if err := json.NewDecoder(resp.Body).Decode(&space); err != nil {
     log.Println(err)
   }
-  return records
-}
-
-func ChooseRandom(records SpaceList) Space {
-  s := rand.NewSource(time.Now().Unix())
-  r := rand.New(s) // initialize local pseudorandom generator
-  return records[r.Intn(len(records))]
+  return space
 }
 
 func main() {
@@ -71,9 +67,15 @@ func main() {
 	router.Static("/static", "static") // For static assets
 
   router.GET("/", func(c *gin.Context) {
-    space := ChooseRandom(LoadSpaceList("https://study.space/api/v1/spaces.json"))
+    space := LoadSpace("https://study.space/api/v1/spaces.json")
     log.Println(space.Name)
-		c.HTML(http.StatusOK, "index.tmpl.html", space.Name)
+		c.HTML(http.StatusOK, "index.tmpl.html",gin.H{
+            "name": space.name,
+            "description": space.ShortDescription,
+            "current_checkins": space.CurrentCheckins,
+            "picture_link": space.PictureLink,
+            "id": space.id,
+    })
 	})
   // By default it serves on :8080 unless a
   // PORT environment variable was defined.
