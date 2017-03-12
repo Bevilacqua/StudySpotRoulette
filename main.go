@@ -43,7 +43,7 @@ func LoadSpaceList(url string) {
     log.Println(err)
   }
 
-  log.Println("Look: " + records[0].ID + "!")
+  log.Println("Look: " + records[0].Name + "!")
 }
 
 func main() {
