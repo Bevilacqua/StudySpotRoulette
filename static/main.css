@@ -17,6 +17,7 @@ h1 {
 }
 
 .footer {
+  display: inline-block;
   color: #6DC17B;
   text-align: center;
 }
