@@ -13,20 +13,10 @@ type Space struct {
 	ID int `json:"id"`
 	Name string `json:"name"`
 	Description string `json:"description"`
-	PictureLink string `json:"picture_link"`
-	Conditions string `json:"conditions"`
-	Address string `json:"address"`
 	ShortDescription string `json:"short_description"`
-	Campus string `json:"campus"`
-	CampusID int `json:"campus_id"`
-	Features []interface{} `json:"features"`
-	Area string `json:"area"`
-	AreaID int `json:"area_id"`
-	Rating float64 `json:"rating"`
-	NoiseRating float64 `json:"noise_rating"`
 	CurrentCheckins string `json:"current_checkins"`
-	TotalCheckins int `json:"total_checkins"`
 	ImageLink string `json:"image_link"`
+	PictureLink string `json:"picture_link"`
 }
 
 func LoadSpace(url string) Space {
