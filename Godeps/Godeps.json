@@ -1,10 +1,7 @@
 {
 	"ImportPath": "StudySpotRoulette",
-	"GoVersion": "go1.8",
+	"GoVersion": "go1.6",
 	"GodepVersion": "v79",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
