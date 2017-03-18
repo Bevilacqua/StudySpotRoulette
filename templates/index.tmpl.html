@@ -21,7 +21,7 @@
     <div id="descrip" class="center lead" style="display: none;">
       <button type="button" class="btn" onclick="location.reload();">Find me a new one!</button> <br /><br />
       <p>{{.description}}</p>
-      <a href="https://study.space/spaces/{{.id}}">Find out who else is studying here.</a>
+      <a href="https://study.space/spaces/{{.id}}" onclick="trackOutboundLink('https://study.space/spaces/{{.id}}'); return false;">Find out who else is studying here.</a>
     </div>
     <br /><br /><br />
     {{template "footer.tmpl.html"}}
